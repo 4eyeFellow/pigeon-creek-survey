@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pigeon Creek Community Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --creek-deep: #1a3c34;
+    --creek-mid: #2d6a4f;
+    --creek-light: #52b788;
+    --creek-pale: #b7e4c7;
+    --creek-wash: #d8f3dc;
+    --sand: #f5f0e8;
+    --sand-dark: #e8dfd2;
+    --bark: #5c4033;
+    --bark-light: #8b6f4e;
+    --water: #3a86a8;
+    --white: #fefefe;
+    --text: #2c2c2c;
+    --text-light: #5a5a5a;
+    --danger: #c44536;
+    --danger-light: #fdf0ee;
+    --success: #2d6a4f;
+    --success-light: #d8f3dc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--creek-deep) 0%, var(--creek-mid) 50%, var(--water) 100%);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 40px;
+    background: var(--sand);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 35 30 45 Q35 55 30 60' stroke='rgba(255,255,255,0.06)' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--creek-wash);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero p {
+    color: var(--creek-pale);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--creek-deep);
+    padding: 0.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--creek-light), var(--creek-pale));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text {
+    font-size: 0.72rem;
+    color: var(--creek-pale);
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: 28px;
+    text-align: right;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
+  }
+
+  .intro-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--creek-light);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .intro-card p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-num {
+    width: 32px;
+    height: 32px;
+    background: var(--creek-mid);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--creek-deep);
+  }
+
+  /* ── QUESTION CARDS ── */
+  .question-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s, border-color 0.2s;
+    border: 2px solid transparent;
+  }
+
+  .question-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .question-card.has-error {
+    border-color: var(--danger);
+    background: var(--danger-light);
+  }
+
+  .question-card .error-msg {
+    display: none;
+    font-size: 0.78rem;
+    color: var(--danger);
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
+  .question-card.has-error .error-msg {
+    display: block;
+  }
+
+  .q-label {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
+  }
+
+  .q-label .q-num {
+    color: var(--creek-mid);
+    font-weight: 600;
+    margin-right: 0.3rem;
+  }
+
+  .q-required {
+    color: var(--danger);
+    margin-left: 2px;
+  }
+
+  /* ── RADIO & CHECKBOX OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    user-select: none;
+    position: relative;
+  }
+
+  .option:hover { background: var(--creek-wash); }
+  .option.selected { background: var(--creek-wash); color: var(--creek-deep); font-weight: 500; }
+
+  .option input[type="radio"],
+  .option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option .indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--sand-dark);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .option .indicator.radio { border-radius: 50%; }
+  .option .indicator.checkbox { border-radius: 4px; }
+
+  .option.selected .indicator {
+    border-color: var(--creek-mid);
+    background: var(--creek-mid);
+  }
+
+  .option.selected .indicator::after {
+    content: '';
+    display: block;
+  }
+
+  .option.selected .indicator.radio::after {
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .option.selected .indicator.checkbox::after {
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-top: -2px;
+  }
+
+  /* ── TEXT INPUTS ── */
+  .text-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--sand-dark);
+    padding: 0.5rem 0;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: transparent;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .text-input:focus { border-color: var(--creek-light); }
+  .text-input::placeholder { color: #bbb; }
+
+  .textarea-input {
+    width: 100%;
+    border: 2px solid var(--sand-dark);
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: transparent;
+    transition: border-color 0.2s;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .textarea-input:focus { border-color: var(--creek-light); }
+
+  /* ── SCALE BUTTONS ── */
+  .scale-row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    justify-content: center;
+    margin-top: 0.25rem;
+  }
+
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+    padding: 0 0.25rem;
+  }
+
+  .scale-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--sand-dark);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .scale-btn:hover {
+    border-color: var(--creek-light);
+    background: var(--creek-wash);
+    color: var(--creek-deep);
+    transform: scale(1.08);
+  }
+
+  .scale-btn.selected {
+    border-color: var(--creek-mid);
+    background: var(--creek-mid);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
+  }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--creek-mid), var(--creek-deep));
+    color: white;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 15px rgba(26,60,52,0.3);
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,60,52,0.4);
+  }
+
+  .submit-btn:active { transform: translateY(0); }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .submit-btn .spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  .submit-btn.loading .spinner { display: block; }
+  .submit-btn.loading .btn-text { display: none; }
+
+  /* ── THANK YOU SCREEN ── */
+  .thank-you {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .thank-you.visible { display: block; }
+
+  .thank-you .check-circle {
+    width: 80px;
+    height: 80px;
+    background: var(--success-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    animation: popIn 0.5s ease both 0.2s;
+  }
+
+  .thank-you .check-circle svg {
+    width: 36px;
+    height: 36px;
+    stroke: var(--success);
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .thank-you h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--creek-deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .thank-you p {
+    font-size: 1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .thank-you .contact {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--bark-light);
+  }
+
+  .thank-you .contact a {
+    color: var(--creek-mid);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sand-dark);
+    line-height: 1.5;
+  }
+
+  .footer-note strong { color: var(--creek-mid); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.7rem; }
+    .container { padding: 1rem 1rem 2rem; }
+    .question-card { padding: 1rem 1.1rem; }
+    .scale-btn { width: 38px; height: 38px; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+  SETUP INSTRUCTIONS (delete this comment block before deploying):
+
+  This survey submits to Google Sheets via Google Apps Script.
+
+  STEP 1: Create a Google Sheet
+    - Name it "Pigeon Creek Survey Responses"
+    - In Row 1, add these column headers (in order):
+      Timestamp | Q1_Connection | Q2_Age | Q3_Zip | Q4_Frequency |
+      Q5_Activities | Q6_Section | Q7_Issues | Q8_Condition |
+      Q9_Willingness | Q10_Concerns | Q11_Wildlife | Q12_Improvements |
+      Q13_Ecological | Q14_Recreational | Q15_Awareness |
+      Q16_Funding | Q17_Volunteer | Q18_VisitMore | Q19_AnythingElse | Q20_Email
+
+  STEP 2: Open Apps Script
+    - In your Google Sheet, go to Extensions > Apps Script
+    - Delete any existing code and paste this:
+
+    function doPost(e) {
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      var data = JSON.parse(e.postData.contents);
+      var row = [
+        new Date(),
+        data.q1, data.q2, data.q3, data.q4,
+        data.q5, data.q6, data.q7, data.q8,
+        data.q9, data.q10, data.q11, data.q12,
+        data.q13, data.q14, data.q15,
+        data.q16, data.q17, data.q18, data.q19, data.q20
+      ];
+      sheet.appendRow(row);
+      return ContentService.createTextOutput(
+        JSON.stringify({status: 'ok'})
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+
+  STEP 3: Deploy
+    - Click Deploy > New Deployment
+    - Type: Web app
+    - Execute as: Me
+    - Who has access: Anyone
+    - Click Deploy, authorize when prompted
+    - Copy the Web App URL
+
+  STEP 4: Paste the URL below
+    - Find the line: const SHEET_URL = ''
+    - Paste your URL between the quotes
+
+  STEP 5: Host this file
+    - Push to your GitHub Pages repo
+    - Or host anywhere that serves static HTML
+═══════════════════════════════════════════ -->
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-text" id="progressText">0%</div>
+</div>
+
+<div class="hero">
+  <div class="hero-badge">Community Feedback</div>
+  <h1>Pigeon Creek<br>Community Survey</h1>
+  <p>Help us understand how you use Pigeon Creek and what improvements matter most to you.</p>
+</div>
+
+<div class="container" id="surveyContainer">
+  <div class="intro-card">
+    <p>This survey is being conducted by UE Venturing Crew 365 and the University of Evansville ChangeLab as part of a community proposal to improve and restore Pigeon Creek. Your responses will directly inform recommendations presented to city leaders and university administration. The survey takes about 5 minutes and all responses are anonymous.</p>
+  </div>
+
+  <form id="surveyForm" novalidate>
+
+    <!-- ══════ SECTION 1: About You ══════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title">About You</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q1">
+        <div class="q-label"><span class="q-num">Q1.</span> What best describes your connection to Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="options" data-type="radio" data-field="q1">
+          <label class="option"><input type="radio" name="q1" value="I live near it (within walking distance)"><span class="indicator radio"></span> I live near it (within walking distance)</label>
+          <label class="option"><input type="radio" name="q1" value="I regularly visit for recreation"><span class="indicator radio"></span> I regularly visit for recreation</label>
+          <label class="option"><input type="radio" name="q1" value="I commute past it / cross it regularly"><span class="indicator radio"></span> I commute past it / cross it regularly</label>
+          <label class="option"><input type="radio" name="q1" value="I'm a UE student or staff member"><span class="indicator radio"></span> I'm a UE student or staff member</label>
+          <label class="option"><input type="radio" name="q1" value="Other"><span class="indicator radio"></span> Other</label>
+        </div>
+        <div class="error-msg">Please select an option</div>
+      </div>
+
+      <div class="question-card" data-name="q2">
+        <div class="q-label"><span class="q-num">Q2.</span> What is your age range?</div>
+        <div class="options" data-type="radio" data-field="q2">
+          <label class="option"><input type="radio" name="q2" value="Under 18"><span class="indicator radio"></span> Under 18</label>
+          <label class="option"><input type="radio" name="q2" value="18–24"><span class="indicator radio"></span> 18–24</label>
+          <label class="option"><input type="radio" name="q2" value="25–34"><span class="indicator radio"></span> 25–34</label>
+          <label class="option"><input type="radio" name="q2" value="35–54"><span class="indicator radio"></span> 35–54</label>
+          <label class="option"><input type="radio" name="q2" value="55+"><span class="indicator radio"></span> 55+</label>
+        </div>
+      </div>
+
+      <div class="question-card" data-required data-name="q3">
+        <div class="q-label"><span class="q-num">Q3.</span> What zip code do you live in?<span class="q-required">*</span></div>
+        <input class="text-input" type="text" name="q3" placeholder="e.g. 47714" maxlength="10">
+        <div class="error-msg">Please enter your zip code</div>
+      </div>
+    </div>
+
+    <!-- ══════ SECTION 2: How You Use Pigeon Creek ══════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title">How You Use Pigeon Creek</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q4">
+        <div class="q-label"><span class="q-num">Q4.</span> How often do you visit or interact with Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="options" data-type="radio" data-field="q4">
+          <label class="option"><input type="radio" name="q4" value="Daily"><span class="indicator radio"></span> Daily</label>
+          <label class="option"><input type="radio" name="q4" value="A few times a week"><span class="indicator radio"></span> A few times a week</label>
+          <label class="option"><input type="radio" name="q4" value="Weekly"><span class="indicator radio"></span> Weekly</label>
+          <label class="option"><input type="radio" name="q4" value="A few times a month"><span class="indicator radio"></span> A few times a month</label>
+          <label class="option"><input type="radio" name="q4" value="Rarely (a few times a year)"><span class="indicator radio"></span> Rarely (a few times a year)</label>
+        </div>
+        <div class="error-msg">Please select an option</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q5">
+        <div class="q-label"><span class="q-num">Q5.</span> What activities do you do at or near Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="options" data-type="checkbox" data-field="q5">
+          <label class="option"><input type="checkbox" name="q5" value="Walking / jogging / running"><span class="indicator checkbox"></span> Walking / jogging / running</label>
+          <label class="option"><input type="checkbox" name="q5" value="Biking"><span class="indicator checkbox"></span> Biking</label>
+          <label class="option"><input type="checkbox" name="q5" value="Fishing"><span class="indicator checkbox"></span> Fishing</label>
+          <label class="option"><input type="checkbox" name="q5" value="Birdwatching / nature observation"><span class="indicator checkbox"></span> Birdwatching / nature observation</label>
+          <label class="option"><input type="checkbox" name="q5" value="Dog walking"><span class="indicator checkbox"></span> Dog walking</label>
+          <label class="option"><input type="checkbox" name="q5" value="Kayaking / canoeing"><span class="indicator checkbox"></span> Kayaking / canoeing</label>
+          <label class="option"><input type="checkbox" name="q5" value="Photography"><span class="indicator checkbox"></span> Photography</label>
+          <label class="option"><input type="checkbox" name="q5" value="Relaxation / mental health"><span class="indicator checkbox"></span> Relaxation / mental health</label>
+          <label class="option"><input type="checkbox" name="q5" value="Community events or cleanups"><span class="indicator checkbox"></span> Community events or cleanups</label>
+          <label class="option"><input type="checkbox" name="q5" value="I just pass through / commute by it"><span class="indicator checkbox"></span> I just pass through / commute by it</label>
+          <label class="option"><input type="checkbox" name="q5" value="Other"><span class="indicator checkbox"></span> Other</label>
+        </div>
+        <div class="error-msg">Please select at least one option</div>
+      </div>
+
+      <div class="question-card" data-name="q6">
+        <div class="q-label"><span class="q-num">Q6.</span> Which section of Pigeon Creek do you visit most?</div>
+        <div class="options" data-type="radio" data-field="q6">
+          <label class="option"><input type="radio" name="q6" value="Pigeon Creek Greenway Passage"><span class="indicator radio"></span> Pigeon Creek Greenway Passage</label>
+          <label class="option"><input type="radio" name="q6" value="Green River Road Canoe Launch to Heidelbach Canoe Launch"><span class="indicator radio"></span> Green River Road Canoe Launch to Heidelbach Canoe Launch</label>
+          <label class="option"><input type="radio" name="q6" value="Heidelbach Canoe Launch to Ohio River"><span class="indicator radio"></span> Heidelbach Canoe Launch to Ohio River</label>
+          <label class="option"><input type="radio" name="q6" value="I'm not sure of the exact area"><span class="indicator radio"></span> I'm not sure of the exact area</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ SECTION 3: Concerns & Current Conditions ══════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title">Concerns & Current Conditions</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q7">
+        <div class="q-label"><span class="q-num">Q7.</span> What issues have you personally observed at Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="options" data-type="checkbox" data-field="q7">
+          <label class="option"><input type="checkbox" name="q7" value="Litter and trash in or around the water"><span class="indicator checkbox"></span> Litter and trash in or around the water</label>
+          <label class="option"><input type="checkbox" name="q7" value="Log jams or obstructions"><span class="indicator checkbox"></span> Log jams or obstructions</label>
+          <label class="option"><input type="checkbox" name="q7" value="Water discoloration or odor"><span class="indicator checkbox"></span> Water discoloration or odor</label>
+          <label class="option"><input type="checkbox" name="q7" value="Overgrown or inaccessible banks"><span class="indicator checkbox"></span> Overgrown or inaccessible banks</label>
+          <label class="option"><input type="checkbox" name="q7" value="Erosion or bank damage"><span class="indicator checkbox"></span> Erosion or bank damage</label>
+          <label class="option"><input type="checkbox" name="q7" value="Flooding in nearby areas"><span class="indicator checkbox"></span> Flooding in nearby areas</label>
+          <label class="option"><input type="checkbox" name="q7" value="Lack of signage or trail markers"><span class="indicator checkbox"></span> Lack of signage or trail markers</label>
+          <label class="option"><input type="checkbox" name="q7" value="Safety concerns (lighting, visibility)"><span class="indicator checkbox"></span> Safety concerns (lighting, visibility)</label>
+          <label class="option"><input type="checkbox" name="q7" value="Illegal dumping"><span class="indicator checkbox"></span> Illegal dumping</label>
+          <label class="option"><input type="checkbox" name="q7" value="Construction or demolition debris (concrete, pipes, rebar)"><span class="indicator checkbox"></span> Construction or demolition debris (concrete, pipes, rebar)</label>
+          <label class="option"><input type="checkbox" name="q7" value="Large items or industrial waste (barrels, appliances)"><span class="indicator checkbox"></span> Large items or industrial waste (barrels, appliances)</label>
+          <label class="option"><input type="checkbox" name="q7" value="Limited access points"><span class="indicator checkbox"></span> Limited access points</label>
+          <label class="option"><input type="checkbox" name="q7" value="None — it seems fine to me"><span class="indicator checkbox"></span> None — it seems fine to me</label>
+        </div>
+        <div class="error-msg">Please select at least one option</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q8">
+        <div class="q-label"><span class="q-num">Q8.</span> How would you rate the overall condition of Pigeon Creek today?<span class="q-required">*</span></div>
+        <div class="scale-row" data-field="q8">
+          <div class="scale-btn" data-value="1">1</div>
+          <div class="scale-btn" data-value="2">2</div>
+          <div class="scale-btn" data-value="3">3</div>
+          <div class="scale-btn" data-value="4">4</div>
+          <div class="scale-btn" data-value="5">5</div>
+        </div>
+        <div class="scale-labels"><span>Very Poor</span><span>Excellent</span></div>
+        <div class="error-msg">Please select a rating</div>
+      </div>
+
+      <div class="question-card" data-name="q9">
+        <div class="q-label"><span class="q-num">Q9.</span> How much does the current condition of Pigeon Creek affect your willingness to use it?</div>
+        <div class="scale-row" data-field="q9">
+          <div class="scale-btn" data-value="1">1</div>
+          <div class="scale-btn" data-value="2">2</div>
+          <div class="scale-btn" data-value="3">3</div>
+          <div class="scale-btn" data-value="4">4</div>
+          <div class="scale-btn" data-value="5">5</div>
+        </div>
+        <div class="scale-labels"><span>Not at all</span><span>Significantly</span></div>
+      </div>
+
+      <div class="question-card" data-name="q10">
+        <div class="q-label"><span class="q-num">Q10.</span> Is there a specific location or issue along Pigeon Creek that concerns you most?</div>
+        <textarea class="textarea-input" name="q10" placeholder="Describe the location or issue..."></textarea>
+      </div>
+
+      <div class="question-card" data-name="q11">
+        <div class="q-label"><span class="q-num">Q11.</span> Which of the following wildlife have you seen at Pigeon Creek?</div>
+        <div class="options" data-type="checkbox" data-field="q11">
+          <label class="option"><input type="checkbox" name="q11" value="Bald eagles"><span class="indicator checkbox"></span> Bald eagles</label>
+          <label class="option"><input type="checkbox" name="q11" value="Great blue herons or other wading birds"><span class="indicator checkbox"></span> Great blue herons or other wading birds</label>
+          <label class="option"><input type="checkbox" name="q11" value="Turtles (box turtles, snapping turtles, etc.)"><span class="indicator checkbox"></span> Turtles (box turtles, snapping turtles, etc.)</label>
+          <label class="option"><input type="checkbox" name="q11" value="Wood ducks or other waterfowl"><span class="indicator checkbox"></span> Wood ducks or other waterfowl</label>
+          <label class="option"><input type="checkbox" name="q11" value="Deer"><span class="indicator checkbox"></span> Deer</label>
+          <label class="option"><input type="checkbox" name="q11" value="Fish"><span class="indicator checkbox"></span> Fish</label>
+          <label class="option"><input type="checkbox" name="q11" value="Other wildlife"><span class="indicator checkbox"></span> Other wildlife</label>
+          <label class="option"><input type="checkbox" name="q11" value="I haven't noticed any wildlife"><span class="indicator checkbox"></span> I haven't noticed any wildlife</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ SECTION 4: Priorities & Support ══════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title">Priorities & Support</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q12">
+        <div class="q-label"><span class="q-num">Q12.</span> Which improvements would you most like to see at Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="options" data-type="checkbox" data-field="q12">
+          <label class="option"><input type="checkbox" name="q12" value="Improvements to existing canoe launches (Green River Rd, Heidelbach)"><span class="indicator checkbox"></span> Improvements to existing canoe launches (Green River Rd, Heidelbach)</label>
+          <label class="option"><input type="checkbox" name="q12" value="Additional water access / launch points"><span class="indicator checkbox"></span> Additional water access / launch points</label>
+          <label class="option"><input type="checkbox" name="q12" value="Improved trails and access points along the banks"><span class="indicator checkbox"></span> Improved trails and access points along the banks</label>
+          <label class="option"><input type="checkbox" name="q12" value="Regular cleanup / trash removal"><span class="indicator checkbox"></span> Regular cleanup / trash removal</label>
+          <label class="option"><input type="checkbox" name="q12" value="Log jam and obstruction clearing"><span class="indicator checkbox"></span> Log jam and obstruction clearing</label>
+          <label class="option"><input type="checkbox" name="q12" value="Water quality testing and monitoring"><span class="indicator checkbox"></span> Water quality testing and monitoring</label>
+          <label class="option"><input type="checkbox" name="q12" value="Native plant restoration along banks"><span class="indicator checkbox"></span> Native plant restoration along banks</label>
+          <label class="option"><input type="checkbox" name="q12" value="Stormwater / erosion management"><span class="indicator checkbox"></span> Stormwater / erosion management</label>
+          <label class="option"><input type="checkbox" name="q12" value="Wildlife habitat protection"><span class="indicator checkbox"></span> Wildlife habitat protection</label>
+          <label class="option"><input type="checkbox" name="q12" value="Illegal dumping enforcement and cleanup"><span class="indicator checkbox"></span> Illegal dumping enforcement and cleanup</label>
+          <label class="option"><input type="checkbox" name="q12" value="Educational signage about the ecosystem"><span class="indicator checkbox"></span> Educational signage about the ecosystem</label>
+          <label class="option"><input type="checkbox" name="q12" value="Navigational signage (mileage markers on bridges, boat ramp info)"><span class="indicator checkbox"></span> Navigational signage (mileage markers on bridges, boat ramp info)</label>
+          <label class="option"><input type="checkbox" name="q12" value="Better lighting and safety features"><span class="indicator checkbox"></span> Better lighting and safety features</label>
+          <label class="option"><input type="checkbox" name="q12" value="Community event programming (cleanups, paddles, walks)"><span class="indicator checkbox"></span> Community event programming (cleanups, paddles, walks)</label>
+          <label class="option"><input type="checkbox" name="q12" value="Art installations or beautification"><span class="indicator checkbox"></span> Art installations or beautification</label>
+        </div>
+        <div class="error-msg">Please select at least one option</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q13">
+        <div class="q-label"><span class="q-num">Q13.</span> How important is ecological restoration (water quality, native plants, erosion control) for Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="scale-row" data-field="q13">
+          <div class="scale-btn" data-value="1">1</div>
+          <div class="scale-btn" data-value="2">2</div>
+          <div class="scale-btn" data-value="3">3</div>
+          <div class="scale-btn" data-value="4">4</div>
+          <div class="scale-btn" data-value="5">5</div>
+        </div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+        <div class="error-msg">Please select a rating</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q14">
+        <div class="q-label"><span class="q-num">Q14.</span> How important is improving recreational access (trails, launches, obstructions cleared) along Pigeon Creek?<span class="q-required">*</span></div>
+        <div class="scale-row" data-field="q14">
+          <div class="scale-btn" data-value="1">1</div>
+          <div class="scale-btn" data-value="2">2</div>
+          <div class="scale-btn" data-value="3">3</div>
+          <div class="scale-btn" data-value="4">4</div>
+          <div class="scale-btn" data-value="5">5</div>
+        </div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+        <div class="error-msg">Please select a rating</div>
+      </div>
+
+      <div class="question-card" data-required data-name="q15">
+        <div class="q-label"><span class="q-num">Q15.</span> How important is raising community awareness about Pigeon Creek (signage, events, education)?<span class="q-required">*</span></div>
+        <div class="scale-row" data-field="q15">
+          <div class="scale-btn" data-value="1">1</div>
+          <div class="scale-btn" data-value="2">2</div>
+          <div class="scale-btn" data-value="3">3</div>
+          <div class="scale-btn" data-value="4">4</div>
+          <div class="scale-btn" data-value="5">5</div>
+        </div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+        <div class="error-msg">Please select a rating</div>
+      </div>
+
+      <div class="question-card" data-name="q16">
+        <div class="q-label"><span class="q-num">Q16.</span> Would you support city funding being allocated to Pigeon Creek improvements?</div>
+        <div class="options" data-type="radio" data-field="q16">
+          <label class="option"><input type="radio" name="q16" value="Yes, it should be a priority"><span class="indicator radio"></span> Yes, it should be a priority</label>
+          <label class="option"><input type="radio" name="q16" value="Yes, but only if it doesn't raise taxes"><span class="indicator radio"></span> Yes, but only if it doesn't raise taxes</label>
+          <label class="option"><input type="radio" name="q16" value="Maybe — I'd need to see a specific plan"><span class="indicator radio"></span> Maybe — I'd need to see a specific plan</label>
+          <label class="option"><input type="radio" name="q16" value="No, there are higher priorities"><span class="indicator radio"></span> No, there are higher priorities</label>
+        </div>
+      </div>
+
+      <div class="question-card" data-name="q17">
+        <div class="q-label"><span class="q-num">Q17.</span> Would you be interested in volunteering for Pigeon Creek events (cleanups, paddle trips, awareness campaigns)?</div>
+        <div class="options" data-type="radio" data-field="q17">
+          <label class="option"><input type="radio" name="q17" value="Yes — sign me up"><span class="indicator radio"></span> Yes — sign me up</label>
+          <label class="option"><input type="radio" name="q17" value="Maybe — depends on the time and commitment"><span class="indicator radio"></span> Maybe — depends on the time and commitment</label>
+          <label class="option"><input type="radio" name="q17" value="No, but I'd support it in other ways"><span class="indicator radio"></span> No, but I'd support it in other ways</label>
+          <label class="option"><input type="radio" name="q17" value="Not interested"><span class="indicator radio"></span> Not interested</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ SECTION 5: Final Thoughts ══════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title">Final Thoughts</div>
+      </div>
+
+      <div class="question-card" data-name="q18">
+        <div class="q-label"><span class="q-num">Q18.</span> What would make Pigeon Creek a place you'd visit more often?</div>
+        <textarea class="textarea-input" name="q18" placeholder="Share your thoughts..."></textarea>
+      </div>
+
+      <div class="question-card" data-name="q19">
+        <div class="q-label"><span class="q-num">Q19.</span> Is there anything else you'd like city leaders or UE to know about Pigeon Creek?</div>
+        <textarea class="textarea-input" name="q19" placeholder="Any additional comments..."></textarea>
+      </div>
+
+      <div class="question-card" data-name="q20">
+        <div class="q-label"><span class="q-num">Q20.</span> If you'd like to be contacted about volunteer opportunities or updates, leave your email below.</div>
+        <input class="text-input" type="email" name="q20" placeholder="your@email.com (optional)">
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-text">Submit My Responses</span>
+        <div class="spinner"></div>
+      </button>
+    </div>
+
+    <div class="footer-note">
+      <p>This survey is conducted by <strong>UE Venturing Crew 365</strong> in partnership with the <strong>University of Evansville ChangeLab</strong>.</p>
+      <p style="margin-top:0.4rem;">Questions? Contact <strong>eg218@evansville.edu</strong></p>
+    </div>
+  </form>
+</div>
+
+<!-- Thank You Screen -->
+<div class="container">
+  <div class="thank-you" id="thankYou">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>Thank You!</h2>
+    <p>Your responses have been recorded. They'll directly shape our proposal for improving Pigeon Creek — your voice matters.</p>
+    <p class="contact">Questions or ideas? Reach out at <a href="mailto:eg218@evansville.edu">eg218@evansville.edu</a></p>
+  </div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════
+  // CONFIGURATION — Paste your Google Apps Script Web App URL here:
+  const SHEET_URL = '';
+  // ═══════════════════════════════════════════
+
+  const form = document.getElementById('surveyForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const thankYou = document.getElementById('thankYou');
+  const surveyContainer = document.getElementById('surveyContainer');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+
+  // Store scale values
+  const scaleValues = {};
+
+  // ── Option selection styling ──
+  document.querySelectorAll('.option').forEach(opt => {
+    const input = opt.querySelector('input');
+    if (!input) return;
+
+    opt.addEventListener('click', () => {
+      if (input.type === 'radio') {
+        opt.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        input.checked = true;
+      } else {
+        input.checked = !input.checked;
+        opt.classList.toggle('selected', input.checked);
+      }
+      opt.closest('.question-card').classList.remove('has-error');
+      updateProgress();
+    });
+  });
+
+  // ── Scale button clicks ──
+  document.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('.scale-row');
+      const field = row.dataset.field;
+      row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      scaleValues[field] = btn.dataset.value;
+      btn.closest('.question-card').classList.remove('has-error');
+      updateProgress();
+    });
+  });
+
+  // ── Progress tracking ──
+  function updateProgress() {
+    const cards = document.querySelectorAll('.question-card[data-name]');
+    let answered = 0;
+    cards.forEach(card => {
+      const name = card.dataset.name;
+      if (getFieldValue(name)) answered++;
+    });
+    const pct = Math.round((answered / cards.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressText.textContent = pct + '%';
+  }
+
+  // Listen for text input changes too
+  document.querySelectorAll('.text-input, .textarea-input').forEach(input => {
+    input.addEventListener('input', () => {
+      input.closest('.question-card').classList.remove('has-error');
+      updateProgress();
+    });
+  });
+
+  // ── Get field value ──
+  function getFieldValue(name) {
+    // Scale fields
+    if (scaleValues[name] !== undefined) return scaleValues[name];
+
+    // Radio
+    const radio = form.querySelector(`input[type="radio"][name="${name}"]:checked`);
+    if (radio) return radio.value;
+
+    // Checkboxes
+    const checks = form.querySelectorAll(`input[type="checkbox"][name="${name}"]:checked`);
+    if (checks.length > 0) return Array.from(checks).map(c => c.value).join('; ');
+
+    // Text / textarea
+    const text = form.querySelector(`input[type="text"][name="${name}"], input[type="email"][name="${name}"], textarea[name="${name}"]`);
+    if (text && text.value.trim()) return text.value.trim();
+
+    return '';
+  }
+
+  // ── Validation ──
+  function validate() {
+    let valid = true;
+    let firstError = null;
+
+    document.querySelectorAll('.question-card[data-required]').forEach(card => {
+      const name = card.dataset.name;
+      const val = getFieldValue(name);
+      if (!val) {
+        card.classList.add('has-error');
+        if (!firstError) firstError = card;
+        valid = false;
+      } else {
+        card.classList.remove('has-error');
+      }
+    });
+
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valid;
+  }
+
+  // ── Submit ──
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    const data = {};
+    for (let i = 1; i <= 20; i++) {
+      data['q' + i] = getFieldValue('q' + i) || '';
+    }
+
+    try {
+      if (SHEET_URL) {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } else {
+        // No backend configured — log to console
+        console.log('Survey response (no backend configured):', data);
+      }
+
+      // Show thank you
+      surveyContainer.style.display = 'none';
+      thankYou.classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      progressFill.style.width = '100%';
+      progressText.textContent = '100%';
+
+    } catch (err) {
+      console.error('Submit error:', err);
+      alert('There was an error submitting your response. Please try again.');
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
