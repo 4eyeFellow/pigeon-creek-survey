@@ -1036,12 +1036,8 @@
 
     try {
       if (SHEET_URL) {
-        await fetch(SHEET_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(data)
-        });
+        var img = new Image();
+img.src = SHEET_URL + '?data=' + encodeURIComponent(JSON.stringify(data));
       } else {
         // No backend configured — log to console
         console.log('Survey response (no backend configured):', data);
