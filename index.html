@@ -1036,8 +1036,21 @@
 
     try {
       if (SHEET_URL) {
-        var img = new Image();
-img.src = SHEET_URL + '?data=' + encodeURIComponent(JSON.stringify(data));
+        var iframe = document.createElement('iframe');
+iframe.name = 'survey_submit';
+iframe.style.display = 'none';
+document.body.appendChild(iframe);
+var f = document.createElement('form');
+f.method = 'POST';
+f.action = SHEET_URL;
+f.target = 'survey_submit';
+var input = document.createElement('input');
+input.type = 'hidden';
+input.name = 'data';
+input.value = JSON.stringify(data);
+f.appendChild(input);
+document.body.appendChild(f);
+f.submit();
       } else {
         // No backend configured — log to console
         console.log('Survey response (no backend configured):', data);
